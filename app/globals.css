@@ -1,0 +1,58 @@
+@import "tailwindcss";
+@import "@fontsource/poppins/300.css";
+@import "@fontsource/poppins/400.css";
+@import "@fontsource/poppins/600.css";
+@import "@fontsource/poppins/700.css";
+@import "@fontsource/poppins/800.css";
+
+@theme {
+  --font-sans: "Poppins", sans-serif;
+  --color-brand-purple: #6d28d9;
+  --color-brand-yellow: #fbbf24;
+  --color-brand-dark: #111827;
+  --color-brand-light: #f3f4f6;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: #f3f4f6;
+  color: #1f2937;
+  font-family: "Poppins", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.gradient-text {
+  background: linear-gradient(to right, #6d28d9, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.blob-bg {
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="%236D28D9" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,81.6,-46.3C91.4,-33.5,98,-18.1,98,-2.1C98,13.9,91.4,30.5,81.8,44.7C72.2,58.9,59.6,70.7,45.1,78.3C30.6,85.9,14.2,89.3,-1.7,92.2C-17.6,95.1,-35.2,97.5,-49.6,90C-64,82.5,-75.2,65.1,-83.4,47.1C-91.6,29.1,-96.8,10.5,-95,-7.4C-93.2,-25.3,-84.4,-42.5,-71.8,-55.4C-59.2,-68.3,-42.8,-76.9,-27.6,-79.8C-12.4,-82.7,1.6,-79.9,15.8,-75.7C30,-71.5,44.7,-65.9,44.7,-76.4Z" transform="translate(100 100) scale(1.1)" opacity="0.05"/></svg>');
+  background-position: top right;
+  background-repeat: no-repeat;
+}
+
+.section-reveal {
+  animation: fade-up 0.7s ease-out both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

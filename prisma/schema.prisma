@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  EDITOR
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum LeadType {
+  CONTACT
+  PLACEMENT
+}
+
+enum LeadStatus {
+  NEW
+  REVIEWED
+  CLOSED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         UserRole @default(EDITOR)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Course {
+  id        String        @id @default(cuid())
+  slug      String        @unique
+  level     String
+  price     String
+  imageUrl  String?
+  status    ContentStatus @default(DRAFT)
+  sortOrder Int           @default(0)
+  titleEn   String
+  titleDe   String
+  summaryEn String
+  summaryDe String
+  bodyEn    String
+  bodyDe    String
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model Teacher {
+  id            String        @id @default(cuid())
+  slug          String        @unique
+  imageUrl      String?
+  flagCode      String?
+  nationalityEn String?
+  nationalityDe String?
+  status        ContentStatus @default(DRAFT)
+  sortOrder     Int           @default(0)
+  nameEn        String
+  nameDe        String
+  titleEn       String
+  titleDe       String
+  bioEn         String
+  bioDe         String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Post {
+  id               String        @id @default(cuid())
+  slug             String        @unique
+  coverImageUrl    String?
+  categoryEn       String
+  categoryDe       String
+  status           ContentStatus @default(DRAFT)
+  publishedAt      DateTime?
+  titleEn          String
+  titleDe          String
+  excerptEn        String
+  excerptDe        String
+  bodyEn           String
+  bodyDe           String
+  seoTitleEn       String?
+  seoTitleDe       String?
+  seoDescriptionEn String?
+  seoDescriptionDe String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
+model FaqItem {
+  id         String   @id @default(cuid())
+  key        String   @unique
+  sortOrder  Int      @default(0)
+  questionEn String
+  questionDe String
+  answerEn   String
+  answerDe   String
+  active     Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Lead {
+  id             String     @id @default(cuid())
+  type           LeadType
+  name           String
+  email          String
+  phone          String?
+  message        String?
+  preferredLevel String?
+  locale         String
+  status         LeadStatus @default(NEW)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
