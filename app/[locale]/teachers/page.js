@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { SiteShell } from "@/components/site/site-shell";
 import { getLandingContent, isSupportedLocale, locales } from "@/lib/site-data";
 
 export function generateStaticParams() {
@@ -14,10 +15,11 @@ export default async function TeachersPage({ params }) {
     notFound();
   }
 
-  const { teachers, navigation, shared } = getLandingContent(locale);
+  const content = getLandingContent(locale);
+  const { teachers, navigation, shared } = content;
 
   return (
-    <main className="min-h-screen bg-brand-light text-gray-800">
+    <SiteShell locale={locale} content={content}>
       <section className="mx-auto max-w-6xl px-6 py-16">
         <Link href={`/${locale}`} className="text-sm font-semibold text-brand-purple">
           {navigation.homeLabel}
@@ -40,6 +42,6 @@ export default async function TeachersPage({ params }) {
           ))}
         </div>
       </section>
-    </main>
+    </SiteShell>
   );
 }

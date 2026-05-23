@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaqAccordion } from "@/components/site/faq-accordion";
-import { SiteHeader } from "@/components/site/header";
+import { SiteShell } from "@/components/site/site-shell";
 
 function StarRow({ half = false }) {
   return (
@@ -16,14 +16,13 @@ function StarRow({ half = false }) {
 }
 
 export function LandingPage({ locale, content }) {
-  const { navigation, hero, stats, courses, teachers, testimonials, blogPosts, faqItems, cta, footer, shared } = content;
+  const { hero, stats, courses, teachers, testimonials, blogPosts, faqItems, cta, shared } = content;
 
   return (
-    <main className="bg-brand-light font-sans text-gray-800">
-      <SiteHeader locale={locale} navigation={navigation} portalLabel={navigation.portal} />
-      <section className="blob-bg relative overflow-hidden pt-32 pb-20 lg:pt-48 lg:pb-32">
-        <div className="mx-auto flex max-w-6xl flex-col items-center px-6 lg:flex-row">
-          <div className="z-10 w-full text-center lg:w-1/2 lg:pr-12 lg:text-left section-reveal">
+    <SiteShell locale={locale} content={content}>
+      <section className="blob-bg relative overflow-hidden pb-20 lg:pb-28">
+        <div className="site-container flex flex-col items-center lg:flex-row">
+          <div className="z-10 w-full py-10 text-center lg:w-1/2 lg:min-h-[41rem] lg:py-16 lg:pr-12 lg:text-left section-reveal">
             <div className="mb-6 inline-block animate-bounce rounded-full bg-brand-yellow px-4 py-1 font-bold text-brand-dark">{hero.badge}</div>
             <h1 className="mb-6 text-5xl leading-tight font-extrabold lg:text-7xl">
               {hero.titleStart} <br />
@@ -38,14 +37,26 @@ export function LandingPage({ locale, content }) {
                 {hero.secondaryCta}
               </Link>
             </div>
+            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+              {stats.slice(0, 3).map((stat) => (
+                <div key={stat.label} className="rounded-2xl bg-white/80 p-5 text-left shadow-sm ring-1 ring-white/70 backdrop-blur">
+                  <div className="text-2xl font-black text-brand-purple">{stat.value}</div>
+                  <p className="mt-2 text-sm text-gray-600">{stat.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="relative z-10 mt-16 w-full lg:mt-0 lg:w-1/2 section-reveal">
-            <Image src="/images/hero-students.jpg" alt="Students" width={1200} height={1000} priority className="h-[500px] w-full rounded-3xl border-8 border-white object-cover shadow-2xl" />
+            <Image src="/images/hero-students.jpg" alt="Students" width={1200} height={1000} priority className="h-[540px] w-full rounded-3xl border-8 border-white object-cover shadow-2xl lg:h-[620px]" />
+            <div className="absolute -bottom-6 left-6 max-w-xs rounded-3xl bg-brand-dark p-6 text-left text-white shadow-2xl">
+              <p className="text-sm font-semibold text-brand-yellow">{cta.button}</p>
+              <p className="mt-3 text-sm leading-6 text-gray-300">{cta.description}</p>
+            </div>
           </div>
         </div>
       </section>
       <section className="bg-brand-dark py-12 text-white">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 divide-x divide-gray-700 px-6 text-center md:grid-cols-4">
+        <div className="site-container grid grid-cols-2 gap-8 divide-x divide-gray-700 text-center md:grid-cols-4">
           {stats.map((stat) => (
             <div key={stat.label} className="section-reveal">
               <h3 className="mb-2 text-4xl font-black text-brand-yellow">{stat.value}</h3>
@@ -55,7 +66,7 @@ export function LandingPage({ locale, content }) {
         </div>
       </section>
       <section id="courses" className="bg-white py-24">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="site-container">
           <div className="mb-16 text-center section-reveal">
             <h2 className="mb-4 text-4xl font-bold text-brand-dark">{shared.coursesTitle}</h2>
             <p className="mx-auto max-w-2xl text-gray-600">{shared.coursesIntro}</p>
@@ -79,7 +90,7 @@ export function LandingPage({ locale, content }) {
         </div>
       </section>
       <section id="teachers" className="bg-brand-light py-24">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="site-container">
           <div className="mb-12 flex items-end justify-between gap-6 section-reveal">
             <div>
               <h2 className="mb-4 text-4xl font-bold text-brand-dark">{shared.teachersTitle}</h2>
@@ -107,7 +118,7 @@ export function LandingPage({ locale, content }) {
         </div>
       </section>
       <section className="overflow-hidden bg-white py-24">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="site-container">
           <div className="mb-16 text-center section-reveal">
             <h2 className="mb-4 text-4xl font-bold text-brand-dark">{shared.testimonialsTitle}</h2>
             <p className="text-gray-600">{shared.testimonialsIntro}</p>
@@ -133,7 +144,7 @@ export function LandingPage({ locale, content }) {
         </div>
       </section>
       <section id="blog" className="bg-brand-light py-24">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="site-container">
           <div className="mb-12 flex items-end justify-between gap-6 section-reveal">
             <div>
               <h2 className="mb-4 text-4xl font-bold text-brand-dark">{shared.blogTitle}</h2>
@@ -175,7 +186,7 @@ export function LandingPage({ locale, content }) {
       <section id="register" className="relative overflow-hidden bg-brand-purple py-20">
         <div className="absolute top-0 left-0 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white opacity-5" />
         <div className="absolute right-0 bottom-0 h-96 w-96 translate-x-1/3 translate-y-1/3 rounded-full bg-brand-yellow opacity-10" />
-        <div className="relative z-10 mx-auto max-w-6xl px-6 text-center section-reveal">
+        <div className="site-container relative z-10 text-center section-reveal">
           <h2 className="mb-6 text-4xl font-extrabold text-white md:text-5xl">{cta.title}</h2>
           <p className="mx-auto mb-8 max-w-2xl text-lg text-purple-100">{cta.description}</p>
           <Link href={`/${locale}/contact`} className="inline-flex rounded-full bg-brand-yellow px-10 py-4 text-lg font-black text-brand-dark shadow-2xl transition-all hover:scale-105 hover:bg-white">
@@ -183,48 +194,6 @@ export function LandingPage({ locale, content }) {
           </Link>
         </div>
       </section>
-      <footer className="bg-brand-dark pt-20 pb-10 text-white">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-4">
-            <div className="md:col-span-2">
-              <h4 className="mb-6 text-2xl font-extrabold">DeutschAkademie <span className="text-brand-purple">Engel</span></h4>
-              <p className="mb-6 max-w-sm text-gray-400">{footer.description}</p>
-              <div className="flex space-x-4">
-                {footer.socials.map((social) => (
-                  <a key={social.label} href={social.href} className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 transition hover:bg-brand-purple" aria-label={social.label}>
-                    <i className={social.icon} />
-                  </a>
-                ))}
-              </div>
-            </div>
-            <div>
-              <h4 className="mb-6 text-lg font-bold">{footer.exploreTitle}</h4>
-              <ul className="space-y-3 text-gray-400">
-                {footer.links.map((link) => (
-                  <li key={link.label}>
-                    <Link href={link.href.replace("{locale}", locale)} className="transition hover:text-white">{link.label}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className="mb-6 text-lg font-bold">{footer.contactTitle}</h4>
-              <ul className="space-y-3 text-gray-400">
-                <li><i className="fa-solid fa-location-dot w-6" /> {footer.location}</li>
-                <li><i className="fa-solid fa-phone w-6" /> {footer.phone}</li>
-                <li><i className="fa-solid fa-envelope w-6" /> {footer.email}</li>
-              </ul>
-            </div>
-          </div>
-          <div className="flex flex-col items-center justify-between border-t border-gray-800 pt-8 text-center text-sm text-gray-500 md:flex-row">
-            <p>{footer.copyright}</p>
-            <div className="mt-4 space-x-4 md:mt-0">
-              <Link href={`/${locale}/contact`} className="transition hover:text-white">{footer.privacyLabel}</Link>
-              <Link href={`/${locale}/contact`} className="transition hover:text-white">{footer.termsLabel}</Link>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </main>
+    </SiteShell>
   );
 }

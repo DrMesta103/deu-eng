@@ -1,0 +1,17 @@
+
+> academy-engel-next@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.14
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.10.10:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 2.8s
+ ○ Compiling /admin/login ...
+ ✓ Compiled /admin/login in 2.6s (955 modules)
+ GET /admin/login 200 in 4287ms
+ ○ Compiling /[locale] ...
+ ✓ Compiled /[locale] in 2.5s (1011 modules)
+ GET /favicon.ico 404 in 4344ms

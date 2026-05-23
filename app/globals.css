@@ -45,6 +45,42 @@ body {
   animation: fade-up 0.7s ease-out both;
 }
 
+.site-container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 40rem) {
+  .site-container {
+    max-width: 40rem;
+  }
+}
+
+@media (min-width: 48rem) {
+  .site-container {
+    max-width: 48rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .site-container {
+    max-width: 64rem;
+  }
+}
+
+@media (min-width: 80rem) {
+  .site-container {
+    max-width: 80rem;
+  }
+}
+
+@media (min-width: 96rem) {
+  .site-container {
+    max-width: 96rem;
+  }
+}
+
 @keyframes fade-up {
   from {
     opacity: 0;

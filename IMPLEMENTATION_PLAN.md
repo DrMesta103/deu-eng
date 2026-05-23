@@ -1,271 +1,258 @@
-# Academy Engel Implementation Plan
+# Academy Engel Execution Board
 
-This document is the working implementation checklist for the `academy engel` project.
+This file is the implementation backlog for the project.  
+Use it as the single source of truth for what is done, what is blocked, and what comes next.
 
-## Product Goal
+## Status Legend
 
-Build Academy Engel as a single full-stack Next.js application with:
+- `TODO`: not started
+- `IN PROGRESS`: currently being worked on
+- `DONE`: finished
+- `BLOCKED`: cannot continue until a dependency is resolved
 
-- App Router
-- PostgreSQL
-- Prisma ORM
+## Priority Legend
+
+- `P0`: critical, blocks core progress
+- `P1`: important, needed for MVP
+- `P2`: useful but not blocking
+
+## Project Goal
+
+Build Academy Engel as a full-stack Next.js app with:
+
 - bilingual public website (`en`, `de`)
-- admin CMS with role-based access
+- PostgreSQL + Prisma
+- admin CMS with `ADMIN` and `EDITOR`
 - lead capture for contact and placement requests
 
-Phase 1 does **not** include:
+Out of scope for phase 1:
 
-- student accounts
-- payment flow
-- enrollment automation
-- learning portal features
+- student portal
+- payments
+- enrollment system
+- LMS features
 
-## Current Status
+## Current Snapshot
 
-### Completed
+### Already Done
 
-- Next.js public site structure created with App Router
-- locale-based public routes added under `/{locale}`
-- homepage recreated in Next.js based on `index.html`
-- local image assets downloaded into `public/images`
-- reusable public components added
-- FAQ interaction added on the frontend
-- Tailwind moved to local project setup
-- `.gitignore` added
-- initial Prisma schema draft added
-- `.env.example` added
-- `npm run build` passes on the current frontend structure
+- `DONE | P1` Public App Router structure created
+- `DONE | P1` Locale routes added under `/{locale}`
+- `DONE | P1` Homepage rebuilt in Next.js from `index.html`
+- `DONE | P1` Local marketing images downloaded into `public/images`
+- `DONE | P1` Reusable public UI components created
+- `DONE | P1` FAQ accordion interaction added
+- `DONE | P1` Tailwind moved to local setup
+- `DONE | P1` `.gitignore` added
+- `DONE | P1` Initial Prisma schema draft added
+- `DONE | P1` `.env.example` added
+- `DONE | P1` Frontend build passes
 
-### Not Completed Yet
+### Current Blockers
 
-- Prisma runtime installation and database wiring
-- actual PostgreSQL connection
-- seed script with real initial content
-- auth system
-- admin CMS
-- CRUD actions
+- `DONE | P0` Full dependency install for Prisma/Auth stack completed in this environment
+- `DONE | P0` Real PostgreSQL connection is configured in `.env.local`
+- `TODO | P0` Auth is not wired
+- `TODO | P0` CMS does not exist yet
+- `TODO | P0` Public pages still use mock data instead of database reads
+
+## Next Recommended Step
+
+- `TODO | P0` Add Prisma and server foundation helpers
+
+This is the next task because it unlocks:
+
+- database migrations
+- seeding
+- auth
 - lead persistence
-- route protection
-- public pages reading from database instead of mock content
+- CMS CRUD
 
-## Phase 1: Environment and Infrastructure
+## Execution Backlog
 
-### 1. Package and Tooling Setup
+### Phase 1: Environment and Runtime
 
-- [ ] Run a clean install for all dependencies in `package.json`
-- [ ] Confirm `next-auth`, `prisma`, `@prisma/client`, `bcryptjs`, and `zod` are installed correctly
-- [ ] Resolve the `@next/swc` version mismatch warning
-- [ ] Verify `postcss` and Tailwind setup is stable in dev and build modes
+- `DONE | P0` Run clean dependency install
+- `DONE | P0` Confirm `next-auth` is installed
+- `DONE | P0` Confirm `prisma` is installed
+- `DONE | P0` Confirm `@prisma/client` is installed
+- `DONE | P0` Confirm `bcryptjs` is installed
+- `DONE | P0` Confirm `zod` is installed
+- `DONE | P1` Resolve `@next/swc` version mismatch warning
+- `DONE | P0` Create `.env.local` from `.env.example`
+- `DONE | P0` Set real `DATABASE_URL`
+- `DONE | P0` Set `NEXTAUTH_SECRET`
+- `DONE | P0` Set `NEXTAUTH_URL`
 
-### 2. Environment Variables
+### Phase 2: Database Setup
 
-- [ ] Create a real `.env.local` from `.env.example`
-- [ ] Set `DATABASE_URL` for PostgreSQL
-- [ ] Set `NEXTAUTH_SECRET`
-- [ ] Set `NEXTAUTH_URL`
-- [ ] Document local development env requirements
+- `DONE | P0` Create local PostgreSQL database
+- `DONE | P0` Run `prisma generate`
+- `DONE | P0` Create first migration
+- `DONE | P0` Run `prisma migrate dev`
+- `DONE | P0` Verify schema applies cleanly
 
-### 3. Database Bootstrapping
+### Phase 3: Prisma and Server Foundation
 
-- [ ] Create PostgreSQL database for local development
-- [ ] Run `prisma generate`
-- [ ] Create first Prisma migration
-- [ ] Run `prisma migrate dev`
-- [ ] Confirm schema is applied successfully
+- `TODO | P1` Add Prisma singleton client helper
+- `TODO | P1` Add auth config files
+- `TODO | P1` Add password hashing helpers
+- `TODO | P1` Add role guard helpers
+- `TODO | P1` Add shared `zod` validation schemas
+- `TODO | P1` Add localized content mapping helpers
 
-## Phase 2: Database and Data Layer
+### Phase 4: Seed and Initial Data
 
-### 4. Finalize Prisma Schema
+- `TODO | P1` Replace placeholder `prisma/seed.mjs`
+- `TODO | P1` Seed admin user
+- `TODO | P1` Seed editor user
+- `TODO | P1` Seed courses
+- `TODO | P1` Seed teachers
+- `TODO | P1` Seed blog posts
+- `TODO | P1` Seed FAQ items
+- `TODO | P1` Seed site settings
+- `TODO | P1` Seed initial homepage content consistent with current design
 
-- [ ] Review and refine `User`
-- [ ] Review and refine `Course`
-- [ ] Review and refine `Teacher`
-- [ ] Review and refine `Post`
-- [ ] Review and refine `FaqItem`
-- [ ] Review and refine `Lead`
-- [ ] Review and refine `SiteSetting`
-- [ ] Add timestamps and indexes where needed
-- [ ] Confirm status enums and role enums are final for phase 1
+### Phase 5: Public Data Integration
 
-### 5. Shared Server Utilities
+- `TODO | P0` Replace mock homepage data with Prisma reads
+- `TODO | P0` Replace mock courses data with Prisma reads
+- `TODO | P0` Replace mock teachers data with Prisma reads
+- `TODO | P0` Replace mock blog data with Prisma reads
+- `TODO | P0` Replace mock FAQ data with Prisma reads
+- `TODO | P1` Load site settings from database
+- `TODO | P1` Keep locale rendering stable for both `en` and `de`
+- `TODO | P1` Verify metadata generation per locale/page
 
-- [ ] Add Prisma client singleton helper
-- [ ] Add auth helper utilities
-- [ ] Add role guard helpers
-- [ ] Add shared form validation schemas with `zod`
-- [ ] Add content mapping helpers for `en` and `de`
+### Phase 6: Lead Forms
 
-### 6. Seed Data
+- `TODO | P0` Save contact form submissions into `Lead`
+- `TODO | P0` Save placement form submissions into `Lead`
+- `TODO | P1` Validate forms with `zod`
+- `TODO | P1` Store `locale` for each lead
+- `TODO | P1` Store correct `LeadType`
+- `TODO | P1` Add success state UI
+- `TODO | P1` Add error state UI
 
-- [ ] Replace placeholder seed script in `prisma/seed.mjs`
-- [ ] Seed admin user
-- [ ] Seed editor user
-- [ ] Seed courses
-- [ ] Seed teachers
-- [ ] Seed blog posts
-- [ ] Seed FAQ items
-- [ ] Seed site settings
-- [ ] Ensure seeded content matches the current homepage direction
+### Phase 7: Authentication
 
-## Phase 3: Public Website Integration
+- `TODO | P0` Configure Auth.js / NextAuth for App Router
+- `TODO | P0` Add credentials login
+- `TODO | P0` Add login page for admin
+- `TODO | P0` Add session handling
+- `TODO | P1` Add logout flow
+- `TODO | P0` Restrict admin routes to authenticated users
 
-### 7. Replace Mock Content with Database Reads
+### Phase 8: Authorization
 
-- [ ] Remove dependency on static content in `lib/site-data.js` for production data access
-- [ ] Fetch homepage content from Prisma
-- [ ] Fetch courses list from Prisma
-- [ ] Fetch course detail pages from Prisma
-- [ ] Fetch teachers list from Prisma
-- [ ] Fetch blog list from Prisma
-- [ ] Fetch blog detail pages from Prisma
-- [ ] Fetch FAQ content from Prisma
-- [ ] Fetch site settings from Prisma
+- `TODO | P0` Define `ADMIN` permissions
+- `TODO | P0` Define `EDITOR` permissions
+- `TODO | P0` Restrict user management to `ADMIN`
+- `TODO | P0` Allow content management for `ADMIN` and `EDITOR`
+- `TODO | P0` Protect server actions against unauthorized use
 
-### 8. Public Route Behavior
+### Phase 9: Admin CMS Shell
 
-- [ ] Keep `/{locale}` routing as the public structure
-- [ ] Ensure both `en` and `de` render correct localized content
-- [ ] Confirm metadata is generated per locale/page
-- [ ] Handle not-found states for missing course/blog slugs
-- [ ] Add stable navigation behavior between locales
+- `TODO | P1` Create `/admin` layout
+- `TODO | P1` Create admin navigation/sidebar
+- `TODO | P1` Create dashboard page
+- `TODO | P1` Add reusable admin table layout
+- `TODO | P1` Add reusable admin form layout
+- `TODO | P1` Add loading states
+- `TODO | P1` Add empty states
 
-### 9. Public Forms
+### Phase 10: CMS Content Modules
 
-- [ ] Connect contact form to `Lead` table
-- [ ] Connect placement-test form to `Lead` table
-- [ ] Validate form submissions with `zod`
-- [ ] Store `locale` on lead records
-- [ ] Store `type` as `CONTACT` or `PLACEMENT`
-- [ ] Add success and failure UI states
+- `TODO | P1` Courses list page in admin
+- `TODO | P1` Courses create/edit form
+- `TODO | P1` Teachers list page in admin
+- `TODO | P1` Teachers create/edit form
+- `TODO | P1` Posts list page in admin
+- `TODO | P1` Posts create/edit form
+- `TODO | P1` FAQ list page in admin
+- `TODO | P1` FAQ create/edit form
+- `TODO | P1` Site settings editor
+- `TODO | P1` Leads list page
+- `TODO | P1` Lead detail/update page
+- `TODO | P1` Users list page
+- `TODO | P1` Users create/edit page
 
-## Phase 4: Authentication and Authorization
+### Phase 11: CRUD Actions
 
-### 10. Auth Setup
+- `TODO | P0` Add server actions for courses
+- `TODO | P0` Add server actions for teachers
+- `TODO | P0` Add server actions for blog posts
+- `TODO | P0` Add server actions for FAQ items
+- `TODO | P0` Add server actions for site settings
+- `TODO | P0` Add server actions for leads
+- `TODO | P0` Add server actions for users
+- `TODO | P1` Add cache revalidation after writes
 
-- [ ] Configure Auth.js / NextAuth for App Router
-- [ ] Add credentials provider
-- [ ] Store password hashes with `bcryptjs`
-- [ ] Implement login page for admin area
-- [ ] Implement session handling
-- [ ] Implement logout flow
+### Phase 12: UI and Content Cleanup
 
-### 11. Role-Based Access
-
-- [ ] Define `ADMIN` and `EDITOR` permissions clearly
-- [ ] Protect all `/admin` routes
-- [ ] Restrict user management to `ADMIN`
-- [ ] Allow content management for `ADMIN` and `EDITOR`
-- [ ] Prevent unauthorized access to server actions
-
-## Phase 5: Admin CMS
-
-### 12. Admin App Structure
-
-- [ ] Create `/admin` layout
-- [ ] Add sidebar/navigation
-- [ ] Add dashboard overview page
-- [ ] Add shared admin form styles/components
-- [ ] Add loading and empty states
-
-### 13. Content Management Screens
-
-- [ ] Courses list/create/edit/publish UI
-- [ ] Teachers list/create/edit/publish UI
-- [ ] Blog posts list/create/edit/publish UI
-- [ ] FAQ list/create/edit UI
-- [ ] Site settings editor
-- [ ] Leads list/detail/update status UI
-- [ ] Users list/create/edit UI
-
-### 14. Admin CRUD Backend
-
-- [ ] Create server actions for courses
-- [ ] Create server actions for teachers
-- [ ] Create server actions for blog posts
-- [ ] Create server actions for FAQ items
-- [ ] Create server actions for site settings
-- [ ] Create server actions for leads
-- [ ] Create server actions for users
-- [ ] Add revalidation after mutations
-
-## Phase 6: Quality, UX, and Cleanup
-
-### 15. Frontend Cleanup
-
-- [ ] Compare homepage visually against `index.html`
-- [ ] Tighten spacing, typography, and section order where needed
-- [ ] Improve mobile navigation behavior
-- [ ] Improve button/link consistency
-- [ ] Decide whether any remaining animations should stay CSS-only or be expanded
-
-### 16. Content and Encoding Cleanup
-
-- [ ] Ensure no broken encoding remains anywhere in UI or data
-- [ ] Normalize copy across English and German content
-- [ ] Replace any temporary ASCII-only fallback text if desired
-- [ ] Make sure CMS fields support the intended localized content format
-
-### 17. Codebase Cleanup
-
-- [ ] Remove obsolete prototype code
-- [ ] Remove unused dependencies if any
-- [ ] Split oversized files if they become hard to maintain
-- [ ] Keep server and client boundaries clean
-- [ ] Review naming consistency across routes, models, and UI
+- `TODO | P1` Compare homepage visually against `index.html`
+- `TODO | P1` Tighten spacing and typography where needed
+- `TODO | P1` Improve mobile menu behavior if needed
+- `TODO | P1` Standardize button/link styles
+- `TODO | P1` Remove any remaining text encoding problems
+- `TODO | P1` Normalize English and German copy
+- `TODO | P2` Split oversized files if maintainability drops
+- `TODO | P2` Remove obsolete prototype code after DB migration is done
 
 ## Testing Checklist
 
-### 18. Technical Verification
+### Build and Runtime
 
-- [ ] `npm run build` passes
-- [ ] Prisma client generates successfully
-- [ ] Prisma migrations run on a clean database
-- [ ] Seed script runs successfully
-- [ ] No broken route imports or alias issues
+- `DONE | P1` `npm run build` passes for current frontend
+- `DONE | P0` Prisma client generates successfully
+- `DONE | P0` Prisma migrations work on clean DB
+- `TODO | P1` Seed script runs successfully
 
-### 19. Public Website Verification
+### Public Website
 
-- [ ] `/en` renders correctly
-- [ ] `/de` renders correctly
-- [ ] course listing and detail pages work
-- [ ] blog listing and detail pages work
-- [ ] teachers page works
-- [ ] FAQ page works
-- [ ] contact page works
-- [ ] placement page works
-- [ ] all local images load correctly
+- `DONE | P1` `/en` works
+- `DONE | P1` `/de` works
+- `DONE | P1` courses pages render
+- `DONE | P1` blog pages render
+- `DONE | P1` teachers page renders
+- `DONE | P1` FAQ page renders
+- `DONE | P1` contact page renders
+- `DONE | P1` placement page renders
+- `DONE | P1` local images load
+- `TODO | P1` all public pages read from database
 
-### 20. Auth and Admin Verification
+### Auth and Admin
 
-- [ ] admin can sign in
-- [ ] editor can sign in
-- [ ] anonymous user cannot access admin
-- [ ] admin can manage users
-- [ ] editor cannot manage users
-- [ ] admin and editor can manage content
+- `TODO | P0` admin can sign in
+- `TODO | P0` editor can sign in
+- `TODO | P0` anonymous user is blocked from admin
+- `TODO | P0` admin can manage users
+- `TODO | P0` editor cannot manage users
+- `TODO | P0` admin and editor can manage content
 
-### 21. Lead Verification
+### Leads
 
-- [ ] contact form creates a `Lead`
-- [ ] placement form creates a `Lead`
-- [ ] lead locale is stored correctly
-- [ ] lead status can be updated in admin
+- `TODO | P0` contact form creates `Lead`
+- `TODO | P0` placement form creates `Lead`
+- `TODO | P1` lead locale is stored correctly
+- `TODO | P1` lead status can be updated in admin
 
-## Recommended Execution Order
+## Suggested Working Order
 
-1. Finish dependency installation and fix package/runtime issues
+1. Finish install and runtime setup
 2. Connect PostgreSQL and Prisma
-3. Write real seed data
-4. Replace frontend mock data with database reads
-5. Wire contact and placement forms to the database
-6. Add authentication
-7. Build admin layout and content CRUD
-8. Add role protections and user management
-9. Final visual cleanup and testing
+3. Add seed data
+4. Replace mock content with DB content
+5. Connect lead forms
+6. Add auth
+7. Build admin shell
+8. Add CRUD actions and role restrictions
+9. Final cleanup and QA
 
-## Important Notes
+## Notes
 
-- The current homepage implementation is a frontend milestone, not the final data architecture.
-- The current `lib/site-data.js` should be treated as temporary mock content until Prisma-backed queries replace it.
-- The CMS can be visually simple in phase 1, but permissions and data integrity must be correct.
-- Media storage is external-URL based in the original plan, but local copies of current marketing images are now included for the public demo.
+- `lib/site-data.js` is currently a temporary mock content source.
+- The public website is ahead of the backend right now.
+- Local project `.npmrc` now forces the official npm registry to avoid the broken user-level mirror.
+- Local PostgreSQL is running in Docker on `localhost:5433` for this workspace.
+- Prisma schema is now applied and ready for Phase 3 foundation work.

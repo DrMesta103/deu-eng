@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { SiteShell } from "@/components/site/site-shell";
 import { getLandingContent, isSupportedLocale, locales } from "@/lib/site-data";
 
 export function generateStaticParams() {
@@ -13,13 +14,14 @@ export default async function PlacementTestPage({ params }) {
     notFound();
   }
 
-  const { courses, shared } = getLandingContent(locale);
+  const content = getLandingContent(locale);
+  const { courses, shared, navigation } = content;
 
   return (
-    <main className="min-h-screen bg-white text-gray-800">
+    <SiteShell locale={locale} content={content}>
       <section className="mx-auto max-w-5xl px-6 py-16">
         <Link href={`/${locale}`} className="text-sm font-semibold text-brand-purple">
-          {locale === "de" ? "Startseite" : "Home"}
+          {navigation.homeLabel}
         </Link>
         <div className="mt-6 grid gap-10 md:grid-cols-2">
           <div>
@@ -43,6 +45,6 @@ export default async function PlacementTestPage({ params }) {
           </form>
         </div>
       </section>
-    </main>
+    </SiteShell>
   );
 }

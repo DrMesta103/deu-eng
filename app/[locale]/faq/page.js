@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaqAccordion } from "@/components/site/faq-accordion";
+import { SiteShell } from "@/components/site/site-shell";
 import { getLandingContent, isSupportedLocale, locales } from "@/lib/site-data";
 
 export function generateStaticParams() {
@@ -14,13 +15,14 @@ export default async function FaqPage({ params }) {
     notFound();
   }
 
-  const { faqItems, shared } = getLandingContent(locale);
+  const content = getLandingContent(locale);
+  const { faqItems, shared, navigation } = content;
 
   return (
-    <main className="min-h-screen bg-white text-gray-800">
+    <SiteShell locale={locale} content={content}>
       <section className="mx-auto max-w-4xl px-6 py-16">
         <Link href={`/${locale}`} className="text-sm font-semibold text-brand-purple">
-          {locale === "de" ? "Startseite" : "Home"}
+          {navigation.homeLabel}
         </Link>
         <h1 className="mt-4 text-4xl font-bold text-brand-dark">{shared.faqTitle}</h1>
         <p className="mt-3 max-w-2xl text-gray-600">{shared.faqIntro}</p>
@@ -28,6 +30,6 @@ export default async function FaqPage({ params }) {
           <FaqAccordion items={faqItems} />
         </div>
       </section>
-    </main>
+    </SiteShell>
   );
 }
