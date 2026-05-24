@@ -10,14 +10,25 @@ const loginSchema = z.object({
 });
 
 export async function authenticateAdmin(prevState, formData) {
-  const parsed = loginSchema.safeParse({
-    email: formData.get("email"),
-    password: formData.get("password"),
-  });
+  const values = {
+    email: String(formData.get("email") ?? "").trim().toLowerCase(),
+    password: String(formData.get("password") ?? ""),
+  };
+
+  const parsed = loginSchema.safeParse(values);
 
   if (!parsed.success) {
+    const fieldErrors = parsed.error.flatten().fieldErrors;
+
     return {
-      error: parsed.error.issues[0]?.message ?? "Invalid form submission.",
+      error: null,
+      fieldErrors: {
+        email: fieldErrors.email?.[0] ?? null,
+        password: fieldErrors.password?.[0] ?? null,
+      },
+      values: {
+        email: values.email,
+      },
     };
   }
 
@@ -30,12 +41,40 @@ export async function authenticateAdmin(prevState, formData) {
   } catch (error) {
     if (error instanceof AuthError) {
       return {
-        error: "Email or password is incorrect, or this account does not have admin access.",
+        error:
+          error.type === "CredentialsSignin"
+            ? "Email or password is incorrect, or this account does not have admin access."
+            : "Authentication is temporarily unavailable. Check the database connection and try again.",
+        fieldErrors: {
+          email: null,
+          password: null,
+        },
+        values: {
+          email: parsed.data.email,
+        },
       };
     }
 
-    throw error;
+    return {
+      error: "Authentication is temporarily unavailable. Check the database connection and try again.",
+      fieldErrors: {
+        email: null,
+        password: null,
+      },
+      values: {
+        email: parsed.data.email,
+      },
+    };
   }
 
-  return { error: null };
+  return {
+    error: null,
+    fieldErrors: {
+      email: null,
+      password: null,
+    },
+    values: {
+      email: "",
+    },
+  };
 }

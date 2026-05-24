@@ -31,8 +31,8 @@ export default async function AdminLoginPage() {
               <p className="mt-2 text-2xl font-bold">Dashboard and users</p>
             </div>
             <div className="rounded-[1.75rem] bg-[#f55b2a] p-5 text-white">
-              <p className="text-sm font-semibold text-white/75">Default admin seed</p>
-              <p className="mt-2 text-lg font-bold">admin@engel-akademie.at</p>
+              <p className="text-sm font-semibold text-white/75">Access policy</p>
+              <p className="mt-2 text-lg font-bold">Only admin and editor accounts can enter</p>
             </div>
           </div>
         </section>

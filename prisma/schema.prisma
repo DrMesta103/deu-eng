@@ -32,15 +32,36 @@ enum LeadStatus {
 model User {
   id           String   @id @default(cuid())
   name         String
+  firstName    String?
+  lastName     String?
   email        String   @unique
   passwordHash String
   phone        String?
+  countryCode  String?
   locale       String?
   isActive     Boolean  @default(true)
+  termsAcceptedAt DateTime?
   lastLoginAt  DateTime?
   role         UserRole @default(EDITOR)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  enrollments  StudentCourseEnrollment[]
+}
+
+model StudentCourseEnrollment {
+  id          String   @id @default(cuid())
+  studentId   String
+  courseSlug  String
+  courseTitle String
+  courseLevel String
+  coursePrice String
+  locale      String
+  status      String   @default("ENROLLED")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  student     User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, courseSlug])
 }
 
 model Course {

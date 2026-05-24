@@ -1,0 +1,19 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      DATABASE_URL: ${DATABASE_URL}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      PORTAL_EMAIL_FROM: ${PORTAL_EMAIL_FROM:-}
+      PORTAL_EMAIL_REPLY_TO: ${PORTAL_EMAIL_REPLY_TO:-}
+      PORTAL_EMAIL_ADMIN_TO: ${PORTAL_EMAIL_ADMIN_TO:-}
