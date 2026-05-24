@@ -5,9 +5,12 @@ ENV NEXT_TELEMETRY_DISABLED=1
 FROM base AS deps
 WORKDIR /app
 
+ENV NPM_CONFIG_REGISTRY=https://registry.npmjs.org/
+
 COPY package.json package-lock.json ./
 COPY prisma ./prisma
 
+RUN npm install -g npm@11.5.2
 RUN npm ci
 RUN npx prisma generate
 
